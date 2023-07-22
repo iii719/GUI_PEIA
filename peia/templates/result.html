@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recommended Music</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/result.css">
+</head>
+<body>
+    <h2 class="main-title">Recommended Music</h2>
+
+    <form method="POST">
+        <input type="hidden" name="age" value="{{ session['age'] }}">
+        <input type="hidden" name="gender" value="{{ session['gender'] }}">
+        <input type="hidden" name="mother tongue" value="{{ session['mother tongue'] }}">
+        <input type="hidden" name="mood" value="{{ session['mood'] }}">
+        {% for emotion, selected in session['emotions'].items() %}
+            <input type="hidden" name="{{ emotion }}" value="{{ '1' if selected else '0' }}">
+        {% endfor %}
+
+        {% for song, title, similar_songs in music %}
+        <input type="hidden" name="track id{{ loop.index }}" value="{{ song.split('/')[-1].split('.')[0] }}">
+        <input type="hidden" name="genre{{ loop.index }}" value="{{ song.split('/')[-2] }}">
+
+        <section class="song-section">
+            <h3 class="song-title">{{ title }}</h3>
+            <audio controls>
+                <source src="{{ url_for('static', filename=song) }}" type="audio/mpeg">
+            </audio>
+
+            <div class="feedback">
+                <h4 class="rate-title">Rate this song</h4>
+                <div class="radio-group">
+                    <div>
+                        <input type="radio" id="liked{{ loop.index }}" name="feedback{{ loop.index }}" value="1">
+                        <label for="liked{{ loop.index }}">Liked</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="disliked{{ loop.index }}" name="feedback{{ loop.index }}" value="0">
+                        <label for="disliked{{ loop.index }}">Disliked</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="similar-songs">
+                <h4 class="similar-title">Similar songs</h4>
+                <ul class="similar-song-list">
+                    {% for similar_song_file, similar_song_title in similar_songs %}
+                    <li><a href="{{ url_for('static', filename=similar_song_file) }}" target="_blank">{{ similar_song_title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </section>
+        {% endfor %}
+        <button type="submit" class="submit-button">Submit</button>
+    </form>
+</body>
+</html>

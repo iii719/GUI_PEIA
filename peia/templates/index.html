@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Music Recommendation</title>
+    <link rel="stylesheet" href="/static/css/index.css">
+</head>
+<body>
+    <form action="/" method="post">
+        <h2 class="page-title">Music Recommendation</h2>
+        <div class="input-container">
+            <label for="age" class="major-label">Age</label>
+            <input type="text" id="age" name="age" aria-label="Age">
+        </div>
+        <div class="input-container">
+            <label for="gender" class="major-label">Gender</label>
+            <div class="gender-inputs">
+                <div>
+                    <label for="male">Male</label>
+                    <input type="radio" id="male" name="gender" value="Male">
+                </div>
+                <div>
+                    <label for="female">Female</label>
+                    <input type="radio" id="female" name="gender" value="Female">
+                </div>
+            </div>
+        </div>
+        <label for="country" class="major-label">Country</label>
+        <select id="country" name="country">
+            <option value="Arabic">Arabic</option>
+            <option value="Bengali">Bengali</option>
+            <option value="Catalan">Catalan</option>
+            <option value="Chinese">Chinese</option>
+            <option value="Croatian">Croatian</option>
+            <option value="Czech">Czech</option>
+            <option value="Danish">Danish</option>
+            <option value="Dutch">Dutch</option>
+            <option value="English">English</option>
+            <option value="Estonian">Estonian</option>
+            <option value="Farsi">Farsi</option>
+            <option value="Finnish">Finnish</option>
+            <option value="French">French</option>
+            <option value="German">German</option>
+            <option value="Greek">Greek</option>
+            <option value="Hebrew">Hebrew</option>
+            <option value="Hindi">Hindi</option>
+            <option value="Hungarian">Hungarian</option>
+            <option value="Icelandic">Icelandic</option>
+            <option value="Italian">Italian</option>
+            <option value="Japanese">Japanese</option>
+            <option value="Korean">Korean</option>
+            <option value="Latvian">Latvian</option>
+            <option value="Macedonian">Macedonian</option>
+            <option value="Malay">Malay</option>
+            <option value="Norwegian">Norwegian</option>
+            <option value="Polish">Polish</option>
+            <option value="Portuguese">Portuguese</option>
+            <option value="Romanian">Romanian</option>
+            <option value="Russian">Russian</option>
+            <option value="Serbian">Serbian</option>
+            <option value="Slovenian">Slovenian</option>
+            <option value="Spanish">Spanish</option>
+            <option value="Swedish">Swedish</option>
+            <option value="Tamil">Tamil</option>
+            <option value="Turkish">Turkish</option>
+            <option value="Ucrainian">Ucrainian</option>
+            <option value="Urdu">Urdu</option>
+        </select>
+        <label for="mood" class="major-label">Mood (0 to 5)</label>
+        <input type="number" id="mood" name="mood" min="0" max="5">
+        <div class="form-group">
+            <label class="major-label">genre(s) what you want to listen</label>
+            <div class="genre-inputs">
+                <div class="checkbox-container">
+                    <label for="classical">Classical</label>
+                    <input type="checkbox" id="classical" name="genre[]" value="classical">
+                </div>
+                <div class="checkbox-container">
+                    <label for="rock">Rock</label>
+                    <input type="checkbox" id="rock" name="genre[]" value="rock">
+                </div>
+                <div class="checkbox-container">
+                    <label for="pop">Pop</label>
+                    <input type="checkbox" id="pop" name="genre[]" value="pop">
+                </div>
+                <div class="checkbox-container">
+                    <label for="electronic">Electronic</label>
+                    <input type="checkbox" id="electronic" name="genre[]" value="electronic">
+                </div>
+            </div>
+        </div>
+        <label class="major-label">Emotion you want to feel</label>
+        <div class="emotion-inputs">
+            <div>
+                <label for="amazement">Amazement</label>
+                <input type="checkbox" id="amazement" name="emotion[]" value="amazement">
+            </div>
+            <div>
+                <label for="solemnity">Solemnity</label>
+                <input type="checkbox" id="solemnity" name="emotion" value="solemnity">
+            </div>
+            <div>
+                <label for="tenderness">Tenderness</label>
+                <input type="checkbox" id="tenderness" name="emotion" value="tenderness">
+            </div>
+            <div>
+                <label for="nostalgia">Nostalgia</label>
+                <input type="checkbox" id="nostalgia" name="emotion" value="nostalgia">
+            </div>
+            <div>
+                <label for="calmness">Calmness</label>
+                <input type="checkbox" id="calmness" name="emotion" value="calmness">
+            </div>
+            <div>
+                <label for="power">Power</label>
+                <input type="checkbox" id="power" name="emotion" value="power">
+            </div>
+            <div>
+                <label for="joyful_activation">Joyful Activation</label>
+                <input type="checkbox" id="joyful_activation" name="emotion" value="joyful_activation">
+            </div>
+            <div>
+                <label for="tension">Tension</label>
+                <input type="checkbox" id="tension" name="emotion" value="tension">
+            </div>
+            <div>
+                <label for="sadness">Sadness</label>
+                <input type="checkbox" id="sadness" name="emotion" value="sadness">
+            </div>
+        </div>
+        <input type="submit" value="Submit" class="submit-button">
+    </form>
+</body>
+</html>

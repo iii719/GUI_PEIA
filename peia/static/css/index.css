@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    transition: all 0.5s ease;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    color: #fafafa;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+form {
+    border: 2px solid #555;
+    padding: 30px;
+    background-color: #2b2b2b;
+    box-shadow: 0px 0px 15px #333;
+    width: 90%;
+    max-width: 700px; 
+    border-radius: 20px;
+    transform: scale(0);
+    animation: appear 0.5s ease forwards;
+}
+
+@keyframes appear {
+    to {
+        transform: scale(1);
+    }
+}
+
+@media screen and (min-width: 800px) {
+    form {
+        width: 45%;
+    }
+}
+
+.page-title {
+    font-size: 160%;
+}
+
+.submit-button {
+    background-color: #e91e63;
+    border: none;
+    color: white;
+    padding: 20px 36px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+    width: 100%;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #ad1457;
+    transform: scale(1.05);
+}
+
+
+label {
+    font-weight: 600;
+    display: block;
+    margin-top: 15px;
+}
+
+.major-label {
+    font-size: 20px;
+}
+
+input, select {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 2px solid #555;
+    background-color: #1f1f1f;
+    color: #fafafa;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+.emotion-inputs, .genre-inputs {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.emotion-inputs label, .genre-inputs label {
+    margin-right: 15px;
+}
+input[type=checkbox], input[type=radio] {
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+input[type=checkbox]:checked, input[type=radio]:checked {
+    transform: scale(1.2);
+}
+
+select {
+    appearance: none;
+    background-color: #1f1f1f;
+    background-image: linear-gradient(45deg, transparent 50%, #fafafa 50%), linear-gradient(135deg, #fafafa 50%, transparent 50%), linear-gradient(to right, #e91e63, #e91e63);
+    background-position: calc(100% - 20px) calc(1em + 5px), calc(100% - 15px) calc(1em + 5px), 100% 0; /* adjust these values */
+    background-size: 5px 5px, 5px 5px, 2.5em 3.5em; /* adjust these values */
+    background-repeat: no-repeat;
+    border-radius: 8px;
+    border: 2px solid #555;
+    color: #fafafa;
+    padding-right: 3em;
+    font-size: 16px;
+    transition: border 0.3s ease;
+}
+
+select:focus {
+    border: 2px solid #e91e63;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #e91e63;
+    box-shadow: 0 0 10px #e91e63;
+}
+
+.checkbox-container label{
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-container input[type=checkbox]{
+    margin-right: 10px;
+}
+.gender-inputs {
+    display: flex;
+    justify-content: space-between;
+}
+
+.gender-inputs div {
+    width: 48%;
+}
+
+.gender-inputs label {
+    display: block;
+    margin-right: 0px;
+}
+
+.gender-inputs input[type=radio] {
+    display: block;
+    margin: 10px 0px;
+}
