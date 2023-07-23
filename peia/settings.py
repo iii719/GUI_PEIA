@@ -70,3 +70,10 @@ genre_mapping = {
             2: 'pop',
             3: 'electronic'
         }
+
+genre_mapping_files = {
+        'classical': 'classical_top_5_similar.pkl',
+        'rock': 'rock_top_5_similar.pkl',
+        'pop': 'pop_top_5_similar.pkl',
+        'electronic': 'electronic_top_5_similar.pkl'
+    }

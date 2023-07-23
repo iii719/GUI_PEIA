@@ -13,9 +13,6 @@
         <input type="hidden" name="gender" value="{{ session['gender'] }}">
         <input type="hidden" name="mother tongue" value="{{ session['mother tongue'] }}">
         <input type="hidden" name="mood" value="{{ session['mood'] }}">
-        {% for emotion, selected in session['emotions'].items() %}
-            <input type="hidden" name="{{ emotion }}" value="{{ '1' if selected else '0' }}">
-        {% endfor %}
 
         {% for song, title, similar_songs in music %}
         <input type="hidden" name="track id{{ loop.index }}" value="{{ song.split('/')[-1].split('.')[0] }}">
@@ -31,12 +28,51 @@
                 <h4 class="rate-title">Rate this song</h4>
                 <div class="radio-group">
                     <div>
-                        <input type="radio" id="liked{{ loop.index }}" name="feedback{{ loop.index }}" value="1">
-                        <label for="liked{{ loop.index }}">Liked</label>
+                        <input type="radio" id="liked-{{ loop.index }}" name="feedback{{ loop.index }}" value="1">
+                        <label for="liked-{{ loop.index }}">Liked</label>
                     </div>
                     <div>
-                        <input type="radio" id="disliked{{ loop.index }}" name="feedback{{ loop.index }}" value="0">
-                        <label for="disliked{{ loop.index }}">Disliked</label>
+                        <input type="radio" id="disliked-{{ loop.index }}" name="feedback{{ loop.index }}" value="0">
+                        <label for="disliked-{{ loop.index }}">Disliked</label>
+                    </div>
+                </div>
+                <h4 class="emotions-title">Emotions felt</h4>
+                <div class="checkbox-group">
+                    <div>
+                        <input type="checkbox" id="emotion{{loop.index}}-amazement" name="emotions{{loop.index}}-amazement" value="1">
+                        <label for="emotion{{loop.index}}-amazement">Amazement</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="emotion{{loop.index}}-solemnity" name="emotions{{loop.index}}-solemnity" value="1">
+                        <label for="emotion{{loop.index}}-solemnity">Solemnity</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="emotion{{loop.index}}-tenderness" name="emotions{{loop.index}}-tenderness" value="1">
+                        <label for="emotion{{loop.index}}-tenderness">Tenderness</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="emotion{{loop.index}}-nostalgia" name="emotions{{loop.index}}-nostalgia" value="1">
+                        <label for="emotion{{loop.index}}-nostalgia">Nostalgia</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="emotion{{loop.index}}-calmness" name="emotions{{loop.index}}-calmness" value="1">
+                        <label for="emotion{{loop.index}}-calmness">Calmness</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="emotion{{loop.index}}-power" name="emotions{{loop.index}}-power" value="1">
+                        <label for="emotion{{loop.index}}-power">Power</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="emotion{{loop.index}}-joyful_activation" name="emotions{{loop.index}}-joyful_activation" value="1">
+                        <label for="emotion{{loop.index}}-joyful_activation">Joyful activation</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="emotion{{loop.index}}-tension" name="emotions{{loop.index}}-tension" value="1">
+                        <label for="emotion{{loop.index}}-tension">Tension</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="emotion{{loop.index}}-sadness" name="emotions{{loop.index}}-sadness" value="1">
+                        <label for="emotion{{loop.index}}-sadness">Sadness</label>
                     </div>
                 </div>
             </div>

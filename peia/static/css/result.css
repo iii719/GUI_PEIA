@@ -1,8 +1,19 @@
+:root {
+    --background-color: #2b2b2b;
+    --text-color: #fafafa;
+    --font-family: 'Roboto', sans-serif;
+    --primary-color: #e91e63;
+    --hover-primary-color: #ad1457;
+    --link-color: #FFE400;
+    --hover-link-color: #FFAA00;
+    --radio-checkbox-color: #FF0000;
+}
+
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: var(--font-family);
     background-color: #1b1b1b;
     padding: 20px;
-    color: #fafafa;
+    color: var(--text-color);
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
@@ -11,10 +22,10 @@ body {
 form {
     border: 1px solid #555;
     padding: 20px;
-    background-color: #2b2b2b;
+    background-color: var(--background-color);
     box-shadow: 0px 0px 10px #333;
     margin-bottom: 20px;
-    color: #fafafa;
+    color: var(--text-color);
     border-radius: 10px;
     animation: appear 1s ease forwards;
 }
@@ -30,16 +41,24 @@ form {
     }
 }
 
-.main-title {
-    color: #fafafa;
-    text-align: center;
-    margin-bottom: 30px;
+.main-title, .song-title, .similar-title {
+    color: var(--text-color);
     font-weight: 700;
+    margin: 10px 0;
+}
+
+.main-title {
+    text-align: center;
     font-size: 2.5em;
+    margin-bottom: 30px;
+}
+
+.song-title, .similar-title {
+    font-size: 35px;
 }
 
 .song-section {
-    background-color: #2b2b2b;
+    background-color: var(--background-color);
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 10px;
@@ -50,33 +69,37 @@ form {
     transform: scale(1.01);
 }
 
-.song-title {
-    font-size: 35px;
-    font-weight: bold;
-    color: #fafafa;
-    margin-top: 10px;
+.rate-title, .emotions-title {
+    font-size: 24px;
+    margin-top: 15px;
     margin-bottom: 10px;
 }
 
-.rate-title, .similar-title {
-    font-size: 16px;
-    margin-top: 20px;
-}
-
-.radio-group {
+.checkbox-group, .radio-group {
     display: flex;
     gap: 10px;
     margin-bottom: 10px;
+    flex-wrap: wrap;
 }
 
-.radio-group div {
+.checkbox-group div, .radio-group div {
     display: flex;
     align-items: center;
 }
 
-.radio-group div label {
+.checkbox-group div:hover, .radio-group div:hover {
+    transform: scale(1.02);
+    transition: transform 0.2s ease;
+}
+
+.checkbox-group div input:checked, .radio-group div input:checked {
+    background-color: var(--radio-checkbox-color);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px var(--primary-color);
+}
+.checkbox-group div label, .radio-group div label {
     margin-left: 5px;
-    color: #fafafa;
+    color: var(--text-color);
 }
 
 audio {
@@ -85,9 +108,9 @@ audio {
 }
 
 .submit-button {
-    background-color: #e91e63;
+    background-color: var(--primary-color);
     border: none;
-    color: white;
+    color: var(--text-color);
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
@@ -100,17 +123,17 @@ audio {
 }
 
 .submit-button:hover {
-    background-color: #ad1457;
+    background-color: var(--hover-primary-color);
     transform: scale(1.05);
 }
 
 a {
-    color: #FFE400;
+    color: var(--link-color);
     transition: color 0.3s ease;
 }
 
 a:hover {
-    color: #FFAA00;
+    color: var(--hover-link-color);
 }
 
 @keyframes gradient {
