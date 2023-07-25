@@ -2,7 +2,7 @@ import pickle
 import os
 
 batch_size=16
-
+pred_emotions = ['pred_amazement', 'pred_solemnity', 'pred_tenderness', 'pred_nostalgia', 'pred_calmness', 'pred_power', 'pred_joyful_activation', 'pred_tension', 'pred_sadness']
 emotions = ['amazement', 'solemnity', 'tenderness', 'nostalgia', 'calmness', 'power', 'joyful_activation', 'tension', 'sadness']
 mother_tongue_mapping = {
     "Arabic": 0,

@@ -3,9 +3,10 @@ import torch
 from PEIA import load_model, CustomDataset
 from torch.utils.data import DataLoader
 import os
+import json
 from tinytag import TinyTag
 import pandas as pd
-from settings import emotions, mother_tongue_mapping, batch_size, genre_song_count, genre_mapping, genre_mapping_files, load_similar_songs
+from settings import emotions, mother_tongue_mapping, batch_size, genre_song_count, genre_mapping, genre_mapping_files, pred_emotions,load_similar_songs
 
 app = Flask(__name__)
 app.secret_key = 'a1b2c3'
@@ -25,11 +26,9 @@ def load_user_mood_data(request_form, selected_genres):
 
     mood = {
         'mood': create_tensor(float(request_form.get('mood')), dtype=torch.float32, size=size),
-        **{emotion: create_tensor(1.0 if emotion in request_form.getlist('emotion') else 0.0, dtype=torch.float32, size=size) for emotion in emotions}
     }
 
     return user, mood
-
 
 def load_genre_data(selected_genres):
     genre_data = {
@@ -56,8 +55,6 @@ def process_post_request(request_form):
         'gender': request_form.get('gender'),
         'mother tongue': request_form.get('country'),
         'mood': request_form.get('mood'),
-        'emotions': {emotion: (emotion in request_form.getlist('emotion')) for emotion in emotions},
-        'selected_genres': selected_genres
     })
 
     user, mood = load_user_mood_data(request_form, selected_genres)
@@ -66,17 +63,25 @@ def process_post_request(request_form):
     customdataset = CustomDataset(user, mood, Genre)
     dataloader = DataLoader(customdataset, batch_size=batch_size, shuffle=False)
 
-    outputs = []
+    scores = []
+    emotions = []
     with torch.no_grad():
         for data in dataloader:
-            output, _, _ = model(data['user'], data['mood'], data['Genre'])
-            outputs.append(output)
-    all_outputs = torch.cat(outputs).flatten()
+            output = model(data['user'], data['mood'], data['Genre'])
+            output_score = output[:,0]
+            output_emotion = output[:,1:]
+            scores.append(output_score)
+            emotions.append(output_emotion)
+    all_scores = torch.cat(scores).flatten()
+    all_emotions = torch.cat(emotions)
     
-    topk_values, topk_indices = torch.topk(all_outputs, 15)
+    topk_values, topk_indices = torch.topk(all_scores, 15)
     max_indices = topk_indices[topk_values == topk_values.max()]
     shuffled_indices = max_indices[torch.randperm(max_indices.size(0))]
     selected_indices = shuffled_indices[:5] if len(max_indices) > 5 else topk_indices[:5]
+    
+    selected_emotions_list = all_emotions[selected_indices].tolist()
+    session['selected_emotions'] = json.dumps(selected_emotions_list)
 
     top5_music_files = []
     
@@ -90,6 +95,35 @@ def process_post_request(request_form):
             output_counter+=genre_song_count[genre]
     top5_music_files_str = ','.join(top5_music_files)
     return top5_music_files_str
+
+def process_song_feedback(i, feedback_info, selected_emotions):
+    song_id = int(request.form.get(f'track id{i+1}'))
+    song_genre = request.form.get(f'genre{i+1}')
+
+    felt_emotions_dict = {emotion: int(request.form.get(f'emotions{i+1}-{emotion}') is not None) for emotion in emotions}
+    pred_emotions_dict = {pred_emotion: emotion_score for pred_emotion, emotion_score in zip(pred_emotions, selected_emotions[i])}
+
+    checked_emotions_count = sum(felt_emotions_dict.values())
+    feedback_value = (lambda x: int(x) if x else None)(request.form.get(f'feedback{i+1}'))
+    
+    if feedback_value is None and request.form.get(f'implicit_like_{i+1}') == 'true':
+        feedback_value = 1
+    
+    if checked_emotions_count > 0 or feedback_value is not None:
+        if checked_emotions_count == 0:
+            felt_emotions_dict = {key: None for key in felt_emotions_dict}
+
+        song_feedback = {
+            'track id': song_id,
+            'genre': song_genre,
+            'liked': feedback_value,
+            **feedback_info,
+            **felt_emotions_dict,
+            **pred_emotions_dict
+        }
+        
+        return song_feedback
+    return None
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -108,32 +142,16 @@ def result():
             'mother tongue': session.get('mother tongue'),
             'mood': int(session.get('mood')),
         }
+        selected_emotions_json = session.get('selected_emotions')
+        selected_emotions = json.loads(selected_emotions_json) if selected_emotions_json else None
 
         excel_file_path = 'feedback.xlsx'
         feedback_df = pd.read_excel(excel_file_path) if os.path.isfile(excel_file_path) else pd.DataFrame()
         
         new_feedback = []
         for i in range(5):
-            song_id = int(request.form.get(f'track id{i+1}'))
-            song_genre = request.form.get(f'genre{i+1}')
-
-            felt_emotions_dict = {}
-            for emotion in emotions:
-                felt_emotions_dict[emotion] = int(request.form.get(f'emotions{i+1}-{emotion}') is not None)
-
-            checked_emotions_count = sum(felt_emotions_dict.values())
-            feedback_value = (lambda x: int(x) if x else None)(request.form.get(f'feedback{i+1}'))
-
-            if checked_emotions_count > 0 or feedback_value is not None:
-                if checked_emotions_count == 0:
-                    felt_emotions_dict = {key: None for key in felt_emotions_dict}
-                song_feedback = {
-                    'track id': song_id,
-                    'genre': song_genre,
-                    'liked': feedback_value,
-                    **feedback_info,
-                    **felt_emotions_dict
-                }
+            song_feedback = process_song_feedback(i, feedback_info, selected_emotions)
+            if song_feedback is not None:
                 new_feedback.append(song_feedback)
         
         new_feedback_df = pd.DataFrame(new_feedback)

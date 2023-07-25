@@ -17,7 +17,7 @@
         {% for song, title, similar_songs in music %}
         <input type="hidden" name="track id{{ loop.index }}" value="{{ song.split('/')[-1].split('.')[0] }}">
         <input type="hidden" name="genre{{ loop.index }}" value="{{ song.split('/')[-2] }}">
-
+        <input type="hidden" id="implicit_like_{{ loop.index }}" name="implicit_like_{{ loop.index }}" value="false">
         <section class="song-section">
             <h3 class="song-title">{{ title }}</h3>
             <audio controls>
@@ -89,5 +89,6 @@
         {% endfor %}
         <button type="submit" class="submit-button">Submit</button>
     </form>
+    <script src="/static/js/implicit.js"></script>
 </body>
 </html>

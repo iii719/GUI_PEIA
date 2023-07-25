@@ -31,7 +31,7 @@ body {
 
 form {
     border: 2px solid #555;
-    padding: 30px;
+    padding: 40px; /* padding increased */
     background-color: #2b2b2b;
     box-shadow: 0px 0px 15px #333;
     width: 90%;
@@ -107,12 +107,12 @@ h2 {
     font-weight: 700;
 }
 
-.emotion-inputs, .genre-inputs {
+.genre-inputs {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
 }
-.emotion-inputs label, .genre-inputs label {
+.genre-inputs label {
     margin-right: 15px;
 }
 input[type=checkbox], input[type=radio] {
